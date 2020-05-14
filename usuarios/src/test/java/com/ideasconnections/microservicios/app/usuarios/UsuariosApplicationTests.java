@@ -1,10 +1,10 @@
-package com.ideasconnections.microservicios.app.usuarios.microserviciosusuarios;
+package com.ideasconnections.microservicios.app.usuarios;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MicroserviciosUsuariosApplicationTests {
+class UsuariosApplicationTests {
 
 	@Test
 	void contextLoads() {

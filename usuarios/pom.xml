@@ -8,10 +8,10 @@
 		<version>2.2.7.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ideasconnections.microservicios.app.usuarios</groupId>
-	<artifactId>microservicios-usuarios</artifactId>
+	<groupId>com.ideasconnections.microservicios.app</groupId>
+	<artifactId>usuarios</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservicios-usuarios</name>
+	<name>usuarios</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
