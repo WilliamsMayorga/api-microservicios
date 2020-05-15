@@ -3,7 +3,6 @@ package com.ideasconnections.microservicios.commons.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -11,7 +10,7 @@ import java.util.Optional;
 public class CommonServiceImpl<E, R extends CrudRepository<E,Long>> implements CommonService<E> {
 
     @Autowired
-    private R repository;
+    protected R repository;
 
     @Override
     @Transactional(readOnly = true)
