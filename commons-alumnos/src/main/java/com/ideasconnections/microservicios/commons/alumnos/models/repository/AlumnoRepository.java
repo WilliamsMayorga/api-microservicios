@@ -1,4 +1,4 @@
-package com.ideasconnections.microservicios.app.usuarios.models.repository;
+package com.ideasconnections.microservicios.commons.alumnos.models.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

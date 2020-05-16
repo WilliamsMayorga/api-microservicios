@@ -1,11 +1,10 @@
 package com.ideasconnections.microservicios.app.usuarios.controllers;
 
 
-import com.ideasconnections.microservicios.app.usuarios.models.entity.Alumno;
 import com.ideasconnections.microservicios.app.usuarios.services.AlumnoService;
+import com.ideasconnections.microservicios.commons.alumnos.models.entity.Alumno;
 import com.ideasconnections.microservicios.commons.controllers.CommonController;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
