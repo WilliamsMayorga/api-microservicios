@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ideasconnections.microservicios.app.examenes.models.entity.Examen;
 import com.ideasconnections.microservicios.app.examenes.services.ExamenService;
 import com.ideasconnections.microservicios.commons.controllers.CommonController;
+import com.ideasconnections.microservicios.commons.examenes.models.entity.Examen;
 
 @RestController
 public class ExamenController extends CommonController<Examen, ExamenService> {
