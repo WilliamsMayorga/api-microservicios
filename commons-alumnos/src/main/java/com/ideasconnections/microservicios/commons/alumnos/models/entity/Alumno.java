@@ -1,4 +1,4 @@
-package com.ideasconnections.microservicios.app.usuarios.models.entity;
+package com.ideasconnections.microservicios.commons.alumnos.models.entity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -62,4 +62,17 @@ public class Alumno {
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if(!(obj instanceof Alumno)) {
+			return false;
+		}
+		Alumno alumno = (Alumno) obj;
+		
+		return this.id !=null && this.id.equals(alumno.getId());
+	}
 }
