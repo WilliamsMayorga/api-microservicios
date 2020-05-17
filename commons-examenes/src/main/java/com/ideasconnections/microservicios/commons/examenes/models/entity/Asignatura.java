@@ -25,12 +25,12 @@ public class Asignatura {
 	
 	private String nombre;
 	
-	@JsonIgnoreProperties(value = "{hijos}")
+	@JsonIgnoreProperties(value = {"hijos"})
 	@ManyToOne
 	private Asignatura padre;
 	
 	
-	@JsonIgnoreProperties(value = "{padre}", allowSetters = true)
+	@JsonIgnoreProperties(value = {"padre"}, allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "padre", cascade = CascadeType.ALL)
 	private List<Asignatura> hijos;
 	
