@@ -5,38 +5,54 @@ import com.ideasconnections.microservicios.commons.services.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
-public class CommonController<E,S extends CommonService<E>> {
+import javax.validation.Valid;
 
-    @Autowired
-    protected S service;
+public class CommonController<E, S extends CommonService<E>> {
 
-    @GetMapping
-    public ResponseEntity<?> listar() {
-        return ResponseEntity.ok().body(service.findAll());
-    }
+	@Autowired
+	protected S service;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> ver(@PathVariable Long id) {
-        Optional<E> optionalE = service.findById(id);
-        if (!optionalE.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(optionalE.get());
-    }
+	@GetMapping
+	public ResponseEntity<?> listar() {
+		return ResponseEntity.ok().body(service.findAll());
+	}
 
-    @PostMapping
-    public ResponseEntity<?> crear(@RequestBody E entity) {
-        E entityDb = service.save(entity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<?> ver(@PathVariable Long id) {
+		Optional<E> optionalE = service.findById(id);
+		if (!optionalE.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(optionalE.get());
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+	@PostMapping
+	public ResponseEntity<?> crear(@Valid @RequestBody E entity, BindingResult result) {
+		if (result.hasErrors()) {
+			return this.validar(result);
+		}
+		E entityDb = service.save(entity);
+		return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> eliminar(@PathVariable Long id) {
+		service.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+
+	protected ResponseEntity<?> validar(BindingResult result) {
+		Map<String, Object> errores = new HashMap<>();
+		result.getFieldErrors().forEach(error -> {
+			errores.put(error.getField(), " El campo " + error.getField() + " " + error.getDefaultMessage());
+		});
+		return ResponseEntity.badRequest().body(errores);
+	}
 }
