@@ -70,9 +70,6 @@ public class CursoController extends CommonController<Curso, CursoService> {
 
 		if (cursoDb != null) {
 			List<Long> examenesIds = (List<Long>) service.obtenerExamenesIdsConRespuestasAlumno(id);
-			System.out.println("************************************************************");
-			System.out.println(cursoDb.getNombre());
-			System.out.println("************************************************************");
 			List<Examen> examenes = cursoDb.getExamenes().stream().map(examen -> {
 				if (examenesIds.contains(examen.getId())) {
 					examen.setRespondido(true);
