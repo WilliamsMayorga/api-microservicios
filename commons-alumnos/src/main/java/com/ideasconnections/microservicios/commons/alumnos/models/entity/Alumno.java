@@ -4,82 +4,101 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "alumnos")
 public class Alumno {
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private Long id;
-    
-    @NotEmpty
-    private  String  nombre;
-    @NotEmpty
-    private  String  apellido;
-    @NotEmpty
-    @Email
-    private  String  email;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "create_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createAt;
+	@NotEmpty
+	private String nombre;
+	@NotEmpty
+	private String apellido;
+	@NotEmpty
+	@Email
+	private String email;
 
-    @PrePersist
-    public void prePersist(){
-        this.createAt = new Date();
-    }
+	@Column(name = "create_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createAt;
 
-    public Long getId() {
-        return id;
-    }
+	@Lob
+	@JsonIgnore
+	private byte[] foto;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@PrePersist
+	public void prePersist() {
+		this.createAt = new Date();
+	}
+	
+	public Integer getFotoHashCode() {
+		return this.foto.hashCode();
+	}
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getApellido() {
-        return apellido;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getApellido() {
+		return apellido;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-    public Date getCreateAt() {
-        return createAt;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(Date createAt) {
+		this.createAt = createAt;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj) {
+		if (this == obj) {
 			return true;
 		}
-		if(!(obj instanceof Alumno)) {
+		if (!(obj instanceof Alumno)) {
 			return false;
 		}
 		Alumno alumno = (Alumno) obj;
-		
-		return this.id !=null && this.id.equals(alumno.getId());
+
+		return this.id != null && this.id.equals(alumno.getId());
 	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
 }
