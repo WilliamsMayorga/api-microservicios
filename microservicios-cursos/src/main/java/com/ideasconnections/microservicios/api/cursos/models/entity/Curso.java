@@ -18,8 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.ideasconnections.microservicios.commons.alumnos.models.entity.Alumno;
 import com.ideasconnections.microservicios.commons.examenes.models.entity.Examen;
 
