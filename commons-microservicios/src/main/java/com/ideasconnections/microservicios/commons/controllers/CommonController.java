@@ -58,7 +58,7 @@ public class CommonController<E, S extends CommonService<E>> {
 	}
 	
 	@GetMapping("/pagina")
-	public ResponseEntity<?> listar(@PathVariable Pageable pageable) {
+	public ResponseEntity<?> listar(Pageable pageable) {
 		return ResponseEntity.ok().body(service.findAll(pageable));
 	}
 	
