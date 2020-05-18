@@ -3,6 +3,7 @@ package com.ideasconnections.microservicios.commons.controllers;
 import com.ideasconnections.microservicios.commons.services.CommonService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -55,4 +56,11 @@ public class CommonController<E, S extends CommonService<E>> {
 		});
 		return ResponseEntity.badRequest().body(errores);
 	}
+	
+	@GetMapping("/pagina")
+	public ResponseEntity<?> listar(Pageable pageable) {
+		return ResponseEntity.ok().body(service.findAll(pageable));
+	}
+	
+	
 }
