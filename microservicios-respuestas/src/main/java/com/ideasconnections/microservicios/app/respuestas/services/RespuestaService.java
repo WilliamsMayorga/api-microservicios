@@ -4,4 +4,6 @@ import com.ideasconnections.microservicios.app.respuestas.models.entity.Respuest
 
 public interface RespuestaService {
 	public Iterable<Respuesta> savaAll(Iterable<Respuesta> respuestas);
+	
+	public Iterable<Respuesta> findRespuestaByAlumnoByExamen(Long alumnoId, Long examenId);
 }
