@@ -2,6 +2,7 @@ package com.ideasconnections.microservicios.api.cursos.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -66,6 +67,20 @@ public class CursoController extends CommonController<Curso, CursoService> {
 	@GetMapping("alumno/{id}")
 	public ResponseEntity<?> buscarPorAlumnoId(@PathVariable Long id) {
 		Curso cursoDb = service.findCursoByAlumnoId(id);
+
+		if (cursoDb != null) {
+			List<Long> examenesIds = (List<Long>) service.obtenerExamenesIdsConRespuestasAlumno(id);
+			System.out.println("************************************************************");
+			System.out.println(cursoDb.getNombre());
+			System.out.println("************************************************************");
+			List<Examen> examenes = cursoDb.getExamenes().stream().map(examen -> {
+				if (examenesIds.contains(examen.getId())) {
+					examen.setRespondido(true);
+				}
+				return examen;
+			}).collect(Collectors.toList());
+			cursoDb.setExamenes(examenes);
+		}
 		return ResponseEntity.ok(cursoDb);
 	}
 
