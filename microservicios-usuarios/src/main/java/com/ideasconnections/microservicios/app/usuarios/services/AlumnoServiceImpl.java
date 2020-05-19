@@ -34,4 +34,13 @@ public class AlumnoServiceImpl extends CommonServiceImpl<Alumno,AlumnoRepository
 		clienteCurso.eliminarCursoAlumnoPorId(id);
 	}
 
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		super.deleteById(id);
+		this.eliminarCursoAlumnoPorId(id);
+	}
+	
+	
+
 }
