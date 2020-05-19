@@ -16,18 +16,18 @@ import com.ideasconnections.microservicios.commons.examenes.models.entity.Pregun
 @Entity
 @Table(name = "respuestas")
 public class Respuesta {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String texto;
 
-	// @ManyToOne(fetch = FetchType.LAZY)
 	@Transient
 	private Alumno alumno;
 
 	@Column(name = "alumno_id")
-	private Long AlumnoId;
+	private Long alumnoId;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private Pregunta pregunta;
@@ -65,10 +65,10 @@ public class Respuesta {
 	}
 
 	public Long getAlumnoId() {
-		return AlumnoId;
+		return alumnoId;
 	}
 
 	public void setAlumnoId(Long alumnoId) {
-		AlumnoId = alumnoId;
+		this.alumnoId = alumnoId;
 	}
 }

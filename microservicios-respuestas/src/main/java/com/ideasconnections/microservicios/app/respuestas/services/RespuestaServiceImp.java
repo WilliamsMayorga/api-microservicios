@@ -15,13 +15,13 @@ public class RespuestaServiceImp implements RespuestaService {
 
 	@Override
 	@Transactional
-	public Iterable<Respuesta> savaAll(Iterable<Respuesta> respuestas) {
+	public Iterable<Respuesta> saveAll(Iterable<Respuesta> respuestas) {
 		return repository.saveAll(respuestas);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Iterable<Respuesta> findRespuestaByAlumnoByExamen(Long alumnoId, Long examenId) {	
+	public Iterable<Respuesta> findRespuestaByAlumnoByExamen(Long alumnoId, Long examenId) {
 		return repository.findRespuestaByAlumnoByExamen(alumnoId, examenId);
 	}
 

@@ -26,7 +26,7 @@ public class RespuestaController {
 			respuesta.setAlumnoId(respuesta.getAlumno().getId());
 			return respuesta;
 		}).collect(Collectors.toList());
-		Iterable<Respuesta> respuestasDb = service.savaAll(respuestas);
+		Iterable<Respuesta> respuestasDb = service.saveAll(respuestas);
 		return ResponseEntity.status(HttpStatus.CREATED).body(respuestasDb);
 	}
 
