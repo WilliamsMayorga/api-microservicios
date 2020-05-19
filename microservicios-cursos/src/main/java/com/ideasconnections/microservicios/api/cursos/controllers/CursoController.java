@@ -32,6 +32,21 @@ public class CursoController extends CommonController<Curso, CursoService> {
 	@Value("${config.balanceador.test}")
 	private String balanceadorTest;
 
+	@GetMapping
+	@Override
+	public ResponseEntity<?> listar() {
+		List<Curso> cursos = ((List<Curso>) service.findAll()).stream().map(curso -> {
+			curso.getCursoAlumnos().forEach(cursoAlumno -> {
+				Alumno alumno = new Alumno();
+				alumno.setId(cursoAlumno.getAlumnoId());
+				curso.addAlumno(alumno);
+			});
+			return curso;
+		}).collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(cursos);
+	}
+
 	@GetMapping("/balanceador-test")
 	public ResponseEntity<?> balanceadorTest() {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -56,21 +71,21 @@ public class CursoController extends CommonController<Curso, CursoService> {
 
 	@PutMapping("/{id}/asignar-alumnos")
 	public ResponseEntity<?> asignarAlumnos(@RequestBody List<Alumno> alumnos, @PathVariable Long id) {
-		
+
 		Optional<Curso> optionalCurso = this.service.findById(id);
 		if (!optionalCurso.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Curso cursoDb = optionalCurso.get();
-		
+
 		alumnos.forEach(alumno -> {
-			
+
 			CursoAlumno cursoAlumno = new CursoAlumno();
 			cursoAlumno.setAlumnoId(alumno.getId());
 			cursoAlumno.setCurso(cursoDb);
 			cursoDb.addCursoAlumno(cursoAlumno);
 		});
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(cursoDb));
 
 	}
@@ -83,9 +98,9 @@ public class CursoController extends CommonController<Curso, CursoService> {
 		}
 		Curso cursoDb = optionalCurso.get();
 		CursoAlumno cursoAlumno = new CursoAlumno();
-		cursoAlumno.setAlumnoId(alumno.getId());	
+		cursoAlumno.setAlumnoId(alumno.getId());
 		cursoDb.removeCursoAlumno(cursoAlumno);
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(cursoDb));
 
 	}
