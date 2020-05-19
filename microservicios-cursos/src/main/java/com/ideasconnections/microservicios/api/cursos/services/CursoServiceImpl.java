@@ -37,4 +37,11 @@ public class CursoServiceImpl extends CommonServiceImpl<Curso, CursoRepository> 
 	public Iterable<Alumno> obtenerAlumnosPorCurso(Iterable<Long> ids) {
 		return alumnoFeignClient.obtenerAlumnosPorCurso(ids);
 	}
+
+	@Override
+	@Transactional
+	public void eliminarCursoAlumnoPorId(Long id) {
+		repository.eliminarCursoAlumnoPorId(id);
+		
+	}
 }
