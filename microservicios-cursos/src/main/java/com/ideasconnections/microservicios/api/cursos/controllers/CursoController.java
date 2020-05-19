@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ideasconnections.microservicios.api.cursos.models.entity.Curso;
+import com.ideasconnections.microservicios.api.cursos.models.entity.CursoAlumno;
 import com.ideasconnections.microservicios.api.cursos.services.CursoService;
 import com.ideasconnections.microservicios.commons.alumnos.models.entity.Alumno;
 import com.ideasconnections.microservicios.commons.controllers.CommonController;
@@ -27,10 +28,10 @@ import com.ideasconnections.microservicios.commons.examenes.models.entity.Examen
 
 @RestController
 public class CursoController extends CommonController<Curso, CursoService> {
-	
+
 	@Value("${config.balanceador.test}")
 	private String balanceadorTest;
-	
+
 	@GetMapping("/balanceador-test")
 	public ResponseEntity<?> balanceadorTest() {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -55,14 +56,21 @@ public class CursoController extends CommonController<Curso, CursoService> {
 
 	@PutMapping("/{id}/asignar-alumnos")
 	public ResponseEntity<?> asignarAlumnos(@RequestBody List<Alumno> alumnos, @PathVariable Long id) {
+		
 		Optional<Curso> optionalCurso = this.service.findById(id);
 		if (!optionalCurso.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		Curso cursoDb = optionalCurso.get();
+		
 		alumnos.forEach(alumno -> {
-			cursoDb.addAlumno(alumno);
+			
+			CursoAlumno cursoAlumno = new CursoAlumno();
+			cursoAlumno.setAlumnoId(alumno.getId());
+			cursoAlumno.setCurso(cursoDb);
+			cursoDb.addCursoAlumno(cursoAlumno);
 		});
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(cursoDb));
 
 	}
@@ -74,7 +82,10 @@ public class CursoController extends CommonController<Curso, CursoService> {
 			return ResponseEntity.notFound().build();
 		}
 		Curso cursoDb = optionalCurso.get();
-		cursoDb.removeAlumno(alumno);
+		CursoAlumno cursoAlumno = new CursoAlumno();
+		cursoAlumno.setAlumnoId(alumno.getId());	
+		cursoDb.removeCursoAlumno(cursoAlumno);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(this.service.save(cursoDb));
 
 	}
