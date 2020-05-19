@@ -22,6 +22,11 @@ import javax.validation.Valid;
 @RestController
 public class AlumnoController extends CommonController<Alumno, AlumnoService> {
 
+	@GetMapping("/alumnos-por-curso")
+	public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam Iterable<Long> ids){
+		return ResponseEntity.ok(service.findAllById(ids));
+	}
+	
 	@GetMapping("uploads/img/{id}")
 	public ResponseEntity<?> verFoto(@PathVariable Long id)
 	{

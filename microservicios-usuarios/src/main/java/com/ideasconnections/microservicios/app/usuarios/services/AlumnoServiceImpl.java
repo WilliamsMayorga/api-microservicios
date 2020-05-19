@@ -18,4 +18,9 @@ public class AlumnoServiceImpl extends CommonServiceImpl<Alumno,AlumnoRepository
         return repository.findByNombreOrApellido(term);
     }
 
+	@Override
+	public Iterable<Alumno> findAllById(Iterable<Long> ids) {
+		return repository.findAllById(ids);
+	}
+
 }
