@@ -31,7 +31,7 @@ public class CursoController extends CommonController<Curso, CursoService> {
 	@Value("${config.balanceador.test}")
 	private String balanceadorTest;
 	
-	@GetMapping("/Balanceador-test")
+	@GetMapping("/balanceador-test")
 	public ResponseEntity<?> balanceadorTest() {
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("balanceador", balanceadorTest);
