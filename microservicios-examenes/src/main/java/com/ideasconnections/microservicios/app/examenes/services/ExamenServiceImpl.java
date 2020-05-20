@@ -13,13 +13,13 @@ import com.ideasconnections.microservicios.commons.examenes.models.entity.Examen
 import com.ideasconnections.microservicios.commons.services.CommonServiceImpl;
 
 @Service
-public class ExamenServiceImpl extends CommonServiceImpl<Examen, ExamenRepository> implements ExamenService{
+public class ExamenServiceImpl extends CommonServiceImpl<Examen, ExamenRepository> implements ExamenService {
 
 	@Autowired
 	private AsignaturaRepository asignaturaRepository;
-	
+
 	@Override
-	@Transactional(readOnly = true )
+	@Transactional(readOnly = true)
 	public List<Examen> findByNombre(String term) {
 		return repository.findByNombre(term);
 	}
@@ -27,6 +27,12 @@ public class ExamenServiceImpl extends CommonServiceImpl<Examen, ExamenRepositor
 	@Override
 	@Transactional(readOnly = true)
 	public Iterable<Asignatura> findAllAsignaturas() {
-		return  asignaturaRepository.findAll();
+		return asignaturaRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Long> findExamenesIdsConRespuestasByPreguntaIds(Iterable<Long> preguntasIds) {
+		return repository.findExamenesIdsConRespuestasByPreguntaIds(preguntasIds);
 	}
 }
