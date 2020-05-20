@@ -1,5 +1,6 @@
 package com.ideasconnections.microservicios.app.respuestas.services;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,14 @@ public class RespuestaServiceImp implements RespuestaService {
 
 	@Override
 	public Iterable<Long> findExamenesIdsConRespuestasByAlumno(Long alumnoId) {
-		return null;
+		List<Respuesta> respuestaAlumno = (List<Respuesta>) repository.findByAlumnoId(alumnoId);
+		List<Long> examenesIds = Collections.emptyList();
+		if (respuestaAlumno.size() > 0) {
+			List<Long> preguntasIds = respuestaAlumno.stream().map(respuesta -> respuesta.getPreguntaId())
+					.collect(Collectors.toList());
+			examenesIds = examenClient.obtenerExamenesIdsPorPreguntasIdRespondidas(preguntasIds);
+		}
+		return examenesIds;
 	}
 
 	@Override
