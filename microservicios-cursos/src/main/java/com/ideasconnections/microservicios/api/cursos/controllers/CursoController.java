@@ -144,23 +144,26 @@ public class CursoController extends CommonController<Curso, CursoService> {
 
 	}
 
-	@GetMapping("alumno/{id}")
-	public ResponseEntity<?> buscarPorAlumnoId(@PathVariable Long id) {
-		Curso cursoDb = service.findCursoByAlumnoId(id);
-
-		if (cursoDb != null) {
+	@GetMapping("/alumno/{id}")
+	public ResponseEntity<?> buscarPorAlumnoId(@PathVariable Long id){
+		Curso curso = service.findCursoByAlumnoId(id);
+		
+		if(curso != null) {
+			
 			List<Long> examenesIds = (List<Long>) service.obtenerExamenesIdsConRespuestasAlumno(id);
+			
 			if (examenesIds != null && examenesIds.size() > 0) {
-				List<Examen> examenes = cursoDb.getExamenes().stream().map(examen -> {
+				List<Examen> examenes = curso.getExamenes().stream().map(examen -> {
 					if (examenesIds.contains(examen.getId())) {
 						examen.setRespondido(true);
 					}
 					return examen;
 				}).collect(Collectors.toList());
-				cursoDb.setExamenes(examenes);
+
+				curso.setExamenes(examenes);
 			}
 		}
-		return ResponseEntity.ok(cursoDb);
+		return ResponseEntity.ok(curso);
 	}
 
 	@PutMapping("/{id}/asignar-examenes")
